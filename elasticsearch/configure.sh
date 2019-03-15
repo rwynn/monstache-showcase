@@ -8,7 +8,7 @@ curl -sS -XPUT -H"content-type:application/json" -T "/elasticsearch/config/templ
 
 echo
 echo "************************************************************"
-echo "Index pattern created"
+echo "Index template created"
 echo "************************************************************"
 
 echo '1' >> /run/health.check

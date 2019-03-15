@@ -1,12 +1,16 @@
 # Monstache showcase
 
 This project shows how monstache can be applied to real data from data.gov.  The `mongoimport` tool will be used
-to import 6.5 million records of crime data.  During the import monstache will be listening for change events
-on the entire MongoDB deployment and indexing those documents into Elasticsearch.  Before importing monstache will do 
-a little bit of transformation on the data using a golang plugin to enable certain aggregations in Kibana. The golang
-plugin was used over a Javascript plugin after noticing a dramatic performance increase.
+to import 6.5 million records of crime data.
 
-I recommend that your machine has at least 16GB RAM, 20GB free disk, and 4 or more CPUs.
+During the import monstache will be listening for change events on the entire MongoDB deployment and indexing 
+those documents into Elasticsearch.  Before importing monstache will do a little bit of transformation on the 
+data using a golang plugin to enable certain aggregations in Kibana. 
+
+The golang plugin was used over a Javascript plugin after noticing a dramatic performance increase.
+
+I recommend that your machine has at least 16GB RAM, 20GB free disk, and 4 or more CPU cores. You may be able to 
+get away with less by decreasing the heap sizes for Elasticsearch in the docker-compose files.
 
 First you will need to make sure you have `docker` and `docker-compose` installed.  On desktop systems like 
 Docker Desktop for Mac and Windows, Docker Compose is included as part of those desktop installs.
@@ -52,7 +56,9 @@ For the most part I tried not to make any changes to the dataset.  But since the
 I added this information to get more accurate results in Kibana.  You can execute the following to append the CST timezone
 indicator to all the dates in the data.
 
-```
+```sh
+# if on windows look for a sed replacement
+# e.g. get-content crimes.csv | %{$_ -replace "PM,","PM CST,"}
 cd monstache-showcase/mongodb/scripts/data
 sed -i 's/PM,/PM CST,/g' crimes.csv
 sed -i 's/AM,/AM CST,/g' crimes.csv
