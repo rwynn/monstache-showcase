@@ -1,0 +1,57 @@
+version: "2.3"
+
+networks:
+  test:
+    driver: bridge
+
+volumes:
+  esdata1:
+    driver: local
+
+services:
+
+  es6:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.6.1
+    logging:
+      driver: none
+    container_name: c-es
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms6g -Xmx6g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      - test
+    healthcheck:
+      test: "wget -q -O - http://localhost:9200/_cat/health"
+      interval: 1s
+      timeout: 30s
+      retries: 300
+    restart: unless-stopped
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:6.6.1
+    environment:
+      ELASTICSEARCH_URL: http://es6:9200
+    container_name: c-kibana
+    ports:
+      - "5601:5601"
+    volumes:
+      - ./elasticsearch/kibana.yml:/usr/share/kibana/config/kibana.yml
+    networks:
+      - test
+    depends_on:
+      es6:
+        condition: service_healthy
+    healthcheck:
+      test: "wget -q -O - http://localhost:5601/status"
+      interval: 60s
+      timeout: 30s
+      retries: 300
+    restart: unless-stopped

@@ -1,0 +1,35 @@
+mongo-url = "mongodb://root-user:password@mongo-0:27017"
+
+mapper-plugin-path = "/app/plugin.so"
+
+elasticsearch-urls = ["http://es6:9200"]
+elasticsearch-max-seconds = 5
+elasticsearch-max-conns = 6
+
+change-stream-namespaces = [""]
+
+verbose = false
+
+enable-http-server = true
+
+#[[script]]
+#namespace = "not.applied"
+#script = """
+#var WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+#var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+#var HOURS = ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm'];
+#module.exports = function(doc) {
+#    // normalize location data for geo_point field loc
+#    var latF = parseFloat(doc.Latitude),
+#        lonF = parseFloat(doc.Longitude);
+#    if (!isNaN(latF) && !isNaN(lonF)) {
+#      doc.Loc = { lat: doc.Latitude, lon: doc.Longitude};
+#    }
+#    // extract important time data for aggregation
+#    var ts = doc.Date;
+#    doc.Hour = HOURS[ts.Hour()];
+#    doc.Weekday = WEEKDAYS[ts.Weekday()];
+#    doc.Month = MONTHS[ts.Month() - 1];
+#    return _.omit(doc, "Location", "Latitude", "Longitude");
+#}
+#"""

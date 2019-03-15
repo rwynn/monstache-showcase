@@ -1,0 +1,77 @@
+{
+  "index_patterns": ["chicago*"],
+  "settings": {
+    "number_of_shards": 5,
+    "number_of_replicas": 0,
+    "refresh_interval": "30s"
+  },
+  "mappings": {
+    "_doc": {
+      "_source": {
+        "enabled": true
+      },
+      "properties": {
+        "Hour": {
+          "type": "keyword"
+        },
+        "Weekday": {
+          "type": "keyword"
+        },
+        "Month": {
+          "type": "keyword"
+        },
+        "Arrest": {
+          "type": "boolean"
+        },
+        "Block": {
+          "type": "keyword"
+        },
+        "Beat": {
+          "type": "keyword"
+        },
+        "Ward": {
+          "type": "keyword"
+        },
+        "District": {
+          "type": "keyword"
+        },
+        "Case Number": {
+          "type": "keyword"
+        },
+        "Domestic": {
+          "type": "boolean"
+        },
+        "Description": {
+          "type": "text"
+        },
+        "Location Description": {
+          "type": "text"
+        },
+        "Primary Type": {
+          "type": "keyword"
+        },
+        "FBI Code": {
+          "type": "keyword"
+        },
+        "Community Area": {
+          "type": "keyword"
+        },
+        "IUCR": {
+          "type": "keyword"
+        },
+        "ID": {
+          "type": "keyword"
+        },
+        "Date": {
+          "type": "date"
+        },
+        "Updated On": {
+          "type": "date"
+        },
+        "Loc": {
+          "type": "geo_point"
+        }
+      }
+    }
+  }
+}
