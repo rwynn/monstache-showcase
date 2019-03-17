@@ -52,18 +52,6 @@ When you have downloaded this large 1.5GB file you should copy it to the followi
 monstache-showcase/mongodb/scripts/data/crimes.csv
 ```
 
-For the most part I tried not to make any changes to the dataset.  But since the data did not include timezone information
-I added this information to get more accurate results in Kibana.  You can execute the following to append the CST timezone
-indicator to all the dates in the data.
-
-```sh
-# if on windows look for a sed replacement
-# e.g. get-content crimes.csv | %{$_ -replace "PM,","PM CST,"}
-cd monstache-showcase/mongodb/scripts/data
-sed -i 's/PM,/PM CST,/g' crimes.csv
-sed -i 's/AM,/AM CST,/g' crimes.csv
-```
-
 You are now ready to run docker-compose and start the import. 
 
 ```
@@ -129,6 +117,9 @@ In Kibana you can start from scratch and define an index-pattern. However, I rec
 file named `export.json` from the root of monstache-showcase to get a head start.
 
 To import you will want to go to `Management` -> `Saved Objects` and then click `Import` and upload `export.json`.
+
+You will also want to go under `Management` -> `Advanced Settings` in Kibana and set `Timezone for date formatting`
+to `UTC` to display dates correctly.
 
 When you are finished analyzing in Kibana you can run `./stop-showcase.sh` to bring down the containers.
 
