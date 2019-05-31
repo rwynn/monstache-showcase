@@ -10,13 +10,14 @@ volumes:
 
 services:
 
-  es6:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.6.1
+  es7:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.1.1
     logging:
       driver: none
     container_name: c-es
     environment:
       - bootstrap.memory_lock=true
+      - discovery.type=single-node
       - "ES_JAVA_OPTS=-Xms6g -Xmx6g"
     ulimits:
       memlock:
@@ -36,9 +37,9 @@ services:
     restart: unless-stopped
 
   kibana:
-    image: docker.elastic.co/kibana/kibana-oss:6.6.1
+    image: docker.elastic.co/kibana/kibana-oss:7.1.1
     environment:
-      ELASTICSEARCH_URL: http://es6:9200
+      ELASTICSEARCH_HOSTS: http://es7:9200
     container_name: c-kibana
     ports:
       - "5601:5601"
@@ -47,7 +48,7 @@ services:
     networks:
       - test
     depends_on:
-      es6:
+      es7:
         condition: service_healthy
     healthcheck:
       test: "wget -q -O - http://localhost:5601/status"

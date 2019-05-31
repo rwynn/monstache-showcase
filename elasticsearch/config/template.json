@@ -6,7 +6,6 @@
     "refresh_interval": "30s"
   },
   "mappings": {
-    "_doc": {
       "_source": {
         "enabled": true
       },
@@ -75,6 +74,5 @@
           "type": "geo_point"
         }
       }
-    }
   }
 }

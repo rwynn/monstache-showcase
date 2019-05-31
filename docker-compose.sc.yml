@@ -20,7 +20,7 @@ services:
     volumes:
       - ./elasticsearch:/elasticsearch
     depends_on:
-      es6:
+      es7:
         condition: service_healthy
     networks:
       - test
@@ -51,7 +51,7 @@ services:
       - test
 
   monstache:
-    image: rwynn/monstache:4.15.1
+    image: rwynn/monstache:6.0.6
     container_name: c-monstache
     working_dir: /app
     command: -f ./monstache.config.toml
@@ -61,7 +61,7 @@ services:
     depends_on:
       mongo-0:
         condition: service_healthy
-      es6:
+      es7:
         condition: service_healthy
     ports:
       - "8080:8080"
@@ -102,13 +102,14 @@ services:
       retries: 300
     restart: unless-stopped
 
-  es6:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.6.1
+  es7:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.1.1
     logging:
       driver: none
     container_name: c-es
     environment:
       - bootstrap.memory_lock=true
+      - discovery.type=single-node
       - "ES_JAVA_OPTS=-Xms5g -Xmx5g"
     ulimits:
       memlock:
