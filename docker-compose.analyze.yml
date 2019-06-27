@@ -11,7 +11,7 @@ volumes:
 services:
 
   es7:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.1.1
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.2.0
     logging:
       driver: none
     container_name: c-es
@@ -30,14 +30,14 @@ services:
     networks:
       - test
     healthcheck:
-      test: "wget -q -O - http://localhost:9200/_cat/health"
+      test: "curl --fail http://localhost:9200 || exit 1"
       interval: 1s
       timeout: 30s
       retries: 300
     restart: unless-stopped
 
   kibana:
-    image: docker.elastic.co/kibana/kibana-oss:7.1.1
+    image: docker.elastic.co/kibana/kibana-oss:7.2.0
     environment:
       ELASTICSEARCH_HOSTS: http://es7:9200
     container_name: c-kibana
@@ -50,9 +50,4 @@ services:
     depends_on:
       es7:
         condition: service_healthy
-    healthcheck:
-      test: "wget -q -O - http://localhost:5601/status"
-      interval: 60s
-      timeout: 30s
-      retries: 300
     restart: unless-stopped
