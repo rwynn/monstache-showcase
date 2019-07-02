@@ -51,7 +51,7 @@ services:
       - test
 
   monstache:
-    image: rwynn/monstache:6.0.6
+    image: rwynn/monstache:6.0.9
     container_name: c-monstache
     working_dir: /app
     command: -f ./monstache.config.toml
