@@ -32,7 +32,7 @@ services:
     restart: unless-stopped
 
   data:
-    image: mongo:4.1-xenial
+    image: mongo:4.2
     container_name: c-data
     command: /scripts/mongo-import.sh
     working_dir: /scripts
@@ -51,7 +51,7 @@ services:
       - test
 
   monstache:
-    image: rwynn/monstache:6.0.9
+    image: rwynn/monstache:6.2.2
     container_name: c-monstache
     working_dir: /app
     command: -f ./monstache.config.toml
@@ -75,7 +75,7 @@ services:
     restart: unless-stopped
 
   mongo-0:
-    image: mongo:4.1-xenial
+    image: mongo:4.2
     logging:
       driver: none
     container_name: c-mongo
@@ -103,7 +103,7 @@ services:
     restart: unless-stopped
 
   es7:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.2.0
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.4.0
     logging:
       driver: none
     container_name: c-es

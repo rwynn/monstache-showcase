@@ -11,7 +11,7 @@ volumes:
 services:
 
   es7:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.2.0
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.4.0
     logging:
       driver: none
     container_name: c-es
@@ -37,7 +37,7 @@ services:
     restart: unless-stopped
 
   kibana:
-    image: docker.elastic.co/kibana/kibana-oss:7.2.0
+    image: docker.elastic.co/kibana/kibana-oss:7.4.0
     environment:
       ELASTICSEARCH_HOSTS: http://es7:9200
     container_name: c-kibana
