@@ -52,6 +52,13 @@ When you have downloaded this large 1.5GB file you should copy it to the followi
 monstache-showcase/mongodb/scripts/data/crimes.csv
 ```
 
+Use the following command to note the number of documents to expect later during the import.
+
+```
+# subtract 1 for the csv header
+wc -l monstache-showcase/mongodb/scripts/data/crimes.csv
+```
+
 You are now ready to run docker-compose and start the import. 
 
 ```
@@ -88,10 +95,7 @@ c-config     | ]
 
 ```
 
-The `doc_count` should approach 6820156.  If the document count only reaches 6820155 then that
-means that MongoDB imported a record for the first CSV line (the headers) but this was not stored in Elasticsearch. This
-line is actually not needed because the fields with types are defined outside the file.  You can delete the first header 
-line before running the import if you want the document count to match exactly.
+The `doc_count` field in the response should eventually reach 1 less than the number you recorded from `wc -l`.
 
 Once all the data is loaded into Elasticsearch you can bring down the containers with Ctrl-C or:
 
